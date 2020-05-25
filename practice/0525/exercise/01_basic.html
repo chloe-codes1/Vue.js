@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Basic</title>
+</head>
+<body>
+    
+    <div id="app">
+        <h1>v-on directive</h1>
+        <p> {{ msg }}, {{ name}}!</p>
+        <!-- v-on 으로 event 발생시키기 -->
+        <button v-on:click="deleteMessage">Delete</button>
+        <!-- v-on 대신 @도 가능 -->
+        <button @click="reverseMessage">Reverse</button>
+        <br>
+        <h1>v-bind directive</h1>
+        <span v-bind:title="today">마우스를 올려보세요!</span>
+        <h1>v-model directive</h1>
+        <input v-model="userInput">
+        <p>{{ userInput }}</p>
+        <br>
+        <h1>JS version</h1>
+        <input type="text" id="jsInput">
+        <p id="jsP"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Happy Monday',
+                name: 'Chloe',
+                userInput: '',
+                today: new Date() + '에 로드되었습니다',
+            },
+            methods: {
+                deleteMessage: function(){
+                    this.msg = ''
+                },
+                reverseMessage: function(){
+                    this.msg = this.msg.split('').reverse().join('')
+                }
+            }
+        })
+        
+        // MV (VM)
+        // MTV
+
+
+        // [ JavaScript code 와 비교하기 ]
+
+        // 1. 이벤트가 발생하는 DOM element를 잡는다
+        const jsInput = document.querySelector('#jsInput')
+
+        // 2. 해당 DOM element에 eventListener를 붙인다 (callback 함수로 무엇을 할 지 정의한다)
+        jsInput.addEventListener('input', event => {
+            const inputValue = event.target.value
+            document.querySelector('#jsP').innerText = inputValue
+        })
+        
+
+    </script>
+</body>
+</html>

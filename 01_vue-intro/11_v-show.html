@@ -1,0 +1,48 @@
+<!-- https://vuejs.org/v2/guide/conditional.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-show</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="changeF">changeF</button>
+        <!-- v-if 는 평가(t/f) 가 자주 바뀌지 않을 때 유리하다 => 초기 rendering cost가 적다 -->
+        <p v-if="t">
+            This is v-if with true
+        </p>
+        <p v-if="f">
+            This is v-if with false
+        </p>
+
+        <!-- v-show: 이미 DOM 에 준비 해놨는데 display만 none 임 -->
+        <!-- v-show는 평가 (t/f)가 자주 바뀔 때 좋다 => toggle cost가 적다-->
+
+        <p v-show="t">
+            This is v-show with true
+        </p>
+        <p v-show="f">
+            This is v-show wit false
+        </p>
+
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data: {
+                t: true,
+                f:false,
+            },
+            methods: {
+                changeF(){
+                    this.f = !this.f
+                }
+            }
+        })
+    </script>
+</body>
+</html>

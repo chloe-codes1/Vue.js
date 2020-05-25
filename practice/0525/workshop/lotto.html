@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="getLuckySix">GET LUCKY 6</button>
+        <button @click="getLottoNumber">GET WINNER</button>
+        <ul>
+            <li v-for="number in myNumbers">
+                {{number}}
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            // [ 1...45] 에서 6개를 랜덤하게 뽑는다.
+            data: {
+                allNumbers: _.range(1, 46),
+                myNumbers: []
+            },
+            methods: {
+                getLuckySix(){
+                    this.myNumbers = _.sampleSize(this.allNumbers, 6)
+                    // JS Sort 는 원본 바뀌고 return도 있음
+                    this.myNumbers.sort((a,b) => a - b) // JS는 문자열로 바꾸고 정렬해서 이렇게 함수 씀
+                },
+                
+                // 2. 랜덤 추천 번호를 생성한다.
+                // 3. 1등 정보와 추천된 번호를 비교하여, 결과를 알려준다
+                getLottoNumber(){
+                    // 1. Lotto API로 요청을 보내어, 1등 정보를 가져온다
+                    const lottoURL = 'https://nlottery.co.kr/common.do?method=getLottoNumber&drwNo=912'
+                    const axiosRequest = axios.create({
+                        baseURL: lottoURL,
+                        headers: {
+                            'Access-Control-Allow-Origin': '*'
+                        }
+                    })
+                    axiosRequest.get()
+                        .then(function(res) {
+                            console.log(res)
+                        })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

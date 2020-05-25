@@ -28,6 +28,14 @@
         <p v-if="num2">
             0
         </p>
+
+        <!-- JavaScript 는 empty array도 true-->
+        <p v-if="arr">
+            [] => js는 빈 배열이 true 평가
+        </p>
+        <p v-if="arr.length">
+            [].length를 통해 0인지로 확인
+        </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -40,6 +48,7 @@
                 str2: '',
                 num1: 1,
                 num2: 0,
+                arr: [],
             }
         })
         console.log(app.message) 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get cat images</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="getCatImage">냥줍!</button> 
+        <br>
+        <img :src="catImage" v-bind:alt="altText" v-if="f" id="catImage" height="300px"/>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data: {
+                catImage: '',
+                altText: '냥이 사진',
+                t: true,
+                f: false,
+            },
+            methods: {
+                getCatImage(){
+                    const catImageURL = 'https://api.thecatapi.com/v1/images/search'
+                    const axiosRequest = axios.create({
+                        baseURL: catImageURL,
+                        headers: {
+                            'Access-Control-Allow-Origin': '*'
+                        }
+                    })
+                    axiosRequest.get()
+                        .then( res => {
+                            this.catImage = res.data[0].url
+                            this.f = this.t
+                        })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
