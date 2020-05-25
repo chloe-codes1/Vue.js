@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        <a href=" {{ googleUrl }}">Bad Google link</a>
+        <!-- v-bind: 표준 HTML 속성과 Vue Instance를 연동할 때 (+ a)-->
+        <a v-bind:href="googleUrl">Good Google link</a>
+        <a v-bind:href="naverUrl">Naver link</a>
+        <img v-bind:src="randomImageUrl" v-bind:alt="altText">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+     
+            data: { 
+                googleUrl: 'https://google.com',
+                naverUrl: 'https://naver.com',
+                randomImageUrl: 'https://picsum.photos/200',
+                altText: 'random-image',
+            }
+        })
+    </script>
+</body>
+</html>

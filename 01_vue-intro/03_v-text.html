@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        <!-- Vannila JS의 DomElement.innertext와 같음-->
+
+        <!-- v- 접두사로 시작하는 것드릉ㄴ 모두 directive(명령)라고 부른다. -->
+        <p v-text="message"></p>
+        <p> {{message}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data: {
+                message:'완전히 같아요!'
+            }
+        })
+        console.log(app.message) 
+    </script>
+</body>
+</html>
