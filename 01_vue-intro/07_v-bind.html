@@ -10,8 +10,9 @@
         <a href=" {{ googleUrl }}">Bad Google link</a>
         <!-- v-bind: 표준 HTML 속성과 Vue Instance를 연동할 때 (+ a)-->
         <a v-bind:href="googleUrl">Good Google link</a>
-        <a v-bind:href="naverUrl">Naver link</a>
-        <img v-bind:src="randomImageUrl" v-bind:alt="altText">
+        <!-- v-bind: 를 줄여서 :으로 쓸 수 있다! -->
+        <a :href="naverUrl">Naver link</a>
+        <img :src="randomImageUrl" v-bind:alt="altText">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data: { 
+                message:'Hello Vue!'
+            },
+            methods: {
+                alertWarning: function() {
+                    alert('WARNING!')
+                },
+                // Syntatic sugar : 위와 아래는 완전히 같다!
+                alertMessage(){
+                    alert(this.message)
+                    // Vue 세상의 this -> JS와 다르게 적용됨
+                    // : 내부적으로 proxy system이 적용되기 때문 
+                },
+                changeMessage(){
+                    this.message = 'Changed message'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

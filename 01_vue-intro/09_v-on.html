@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <button v-on:click="alertWarning"> Alert Warning </button>
+        <button v-on:click="alertMessage"> Alert Message </button>
+        <!-- v-on: 을 줄여서 @으로 쓸 수 있다! -->
+        <button @click="changeMessage"> Change Message </button>
+
+        <hr/>
+        <!-- enter key 눌렸을 때 event 발생-->
+        <input v-on:keyup.enter="onKeyUp" type="text">
+            
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data: { 
+                message:'Hello Vue!'
+            },
+            methods: {
+                alertWarning: function() {
+                    alert('WARNING!')
+                },
+                alertMessage(){
+                    alert(this.message)
+                },
+                changeMessage(){
+                    this.message = 'Changed message'
+                },
+                onKeyUp(event) {
+                    this.message = event.target.value
+                }
+            }
+        })
+    </script>
+</body>
+</html>
