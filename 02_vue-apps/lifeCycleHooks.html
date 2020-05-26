@@ -18,7 +18,7 @@
             <h5>{{photo.title}}</h5>
             <img v-bind:src="photo.thumbnailUrl" :alt="photo.title">
         </div>
-        <button  @click="getPhotos" class="button-bottom">Get photos!</button>
+        <button  @click="scrollToTop" class="button-bottom">^</button>
         <!-- HTML 이 Vue instance와 연결된 순간부터, Life cycle hook의 영향을 받는다. -->
         <div id="bottomSensor"></div>
     </div>
@@ -44,22 +44,36 @@
                     }
                     axios.get(`https://jsonplaceholder.typicode.com/photos`, options)
                         .then(res => { // callback 함수 => 함수의 인자로 들어가는 함수 => arrow function
-                            console.log('>>> GET PHOTOS <<<')
+                            //console.log('>>> GET PHOTOS <<<')
                             this.photos = [...this.photos, ...res.data] // ... : array spread 
                         })
                         .catch(err => console.error(err)) // console.error 는 빨간색으로 나옴 ㅎ_ㅎ
                 },
-            },
-            created: function (){ // vuew가 생성되는 순간 할 일 정의 - 초기화 하는 시점
-                // 초기화 이후 AJAX 요청을 보내기 좋은 Hook: created
-                this.getPhotos()
-                const bottomSensor = document.querySelector('#bottomSensor')
-                const watcher = scrollMonitor.create(bottomSensor)
-                // watcher 가 화면에 들어오면, callback 하겠다
-                watcher.enterViewport( ()=> {
-                    console.log('___BOTTOM___')
-                    this.getPhotos()
+                addScrollWatcher: function(){
+                    const bottomSensor = document.querySelector('#bottomSensor')
+                    const watcher = scrollMonitor.create(bottomSensor)
+                    // watcher 가 화면에 들어오면, callback 하겠다
+                    watcher.enterViewport( ()=> {
+                    // 시간 기다려주기 - 서버 과부하를 막기 위한 안전장치
+                    setTimeout(() => {
+                        this.getPhotos()
+                    }, 200)
                 })
+                },
+                scrollToTop: function(){
+                    scroll(0,0) // 맨 위로 올리기 = > window는 전역객체라서 생략함
+                }
+            },
+
+            // 나에게 제어권이 없는, 때가 되면 실행되는 함수들 : created, mounted
+
+            // created: 초기화 이후 AJAX 요청을 보내기 좋은 시점 (Data, Methods에 접근 가능)
+            created: function (){ // vuew가 생성되는 순간 할 일 정의 - 초기화 하는 시점
+                this.getPhotos()
+            },
+            // mounted: DOM과 Vue instance가 bind (연동) 되고 난 이후에 실행할 일들
+            mounted: function(){
+                this.addScrollWatcher()
             }
         })
    

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>0526 workshop</title>
+  <style>
+    /* 취소선 */
+  </style>
+</head>
+<body>
+  <!-- 여기에 코드를 작성하시오 -->
+  <div id="app">
+    <h2>Todo</h2>
+    <select v-model="status">
+      <option value="all">All</option>
+      <option value="in-progress">In progress</option>
+      <option value="completed">Completed</option>
+    </select>
+    <ul>
+      <li v-for="todo in todoByStatus()" v-if="!todo.completed" v-on:click="check(todo)"> 
+        {{ todo.content }} 
+      </li>
+      <li v-else @click="check(todo)">
+        <strike>{{ todo.content }}</strike>
+      </li>
+    </ul>
+    <div>
+      <input v-model="newInput" type="text"/>
+      <button @click="addTodo">+</button>
+    </div>
+    <button @click="clearCompleted">Clear completed</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 여기에 코드를 작성하시오
+    const app = new Vue({
+      el: '#app',
+      data: {
+        status: 'all',
+        newInput: '',
+        todos: [
+        {
+          content: 'Django 복습',
+          completed: true
+        },
+        {
+          content: 'JavaScript 복습',
+          completed: false
+        },
+        {
+          content: 'Vue.js 복습',
+          completed: false
+        },
+        ],
+      },
+      methods: {
+        check(todo){
+          // todo toggling (false -> true, true -> false)
+          todo.completed = !todo.completed
+
+        },
+        addTodo(){
+          // todos에 새로운 newInput 추가
+          this.todos.push({
+            content: this.newInput,
+            completed: false,
+          })
+          this.newInput = ''
+        },
+        clearCompleted(){
+          // todos에서 completed가 true인 todo를 삭제
+          this.todos = this.todos.filter( todo => !todo.completed)
+        },
+        todoByStatus(){
+          // status == 'all', 'active', 'completed'
+          if (this.status === 'in-progress'){
+            return this.todos.filter( todo => !todo.completed)
+          }
+          else if (this.status === 'completed'){
+            return this.todos.filter( todo => todo.completed)
+          }
+          return this.todos
+        }
+      }
+    })
+  </script>
+</body>
+</html>
