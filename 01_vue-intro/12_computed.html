@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app', 
+            data: {
+                accounts: [
+                    {name: 'neo', balance: 500, isBankrrupted:true},
+                    {name: 'tak', balance: 700, isBankrrupted:false},
+                    {name: 'john', balance: 850, isBankrrupted:false},
+                    {name: 'justin', balance: 200, isBankrrupted:true},
+                ],
+                bankrrupedPeople: []
+            },
+            methods: {
+
+            },
+            // 함수인데, Data를 Create Update Delete 하지 않고, Read (return)만 하고 싶을 때 사용
+            computed: {
+                // 함수지만, 이름은 명사형으로 짓는다.
+                bankruppedPeople: function(){ // naming을 배열 (or 값, 문자열)인 것 처럼 하기 (안 헷갈리게!)
+                    // filter 새로운 배열을 return 한다
+                    return this.accounts.filter( account =>{
+                        return account.isBankrrupted
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

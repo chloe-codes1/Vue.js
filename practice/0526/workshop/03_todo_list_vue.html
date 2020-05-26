@@ -7,6 +7,9 @@
   <title>0526 workshop</title>
   <style>
     /* 취소선 */
+    .isCompleted{
+      text-decoration: line-through;
+    }
   </style>
 </head>
 <body>
@@ -19,15 +22,16 @@
       <option value="completed">Completed</option>
     </select>
     <ul>
-      <li v-for="todo in todoByStatus()" v-if="!todo.completed" v-on:click="check(todo)"> 
+                        <!-- computed라서 function 형태 () 아님! -->
+      <li v-for="todo in computedTodoByStatus" :key="todo.id" :class="{isCompleted: todo.completed}"> 
+        <input type="checkbox" v-model="todo.completed">
         {{ todo.content }} 
-      </li>
-      <li v-else @click="check(todo)">
-        <strike>{{ todo.content }}</strike>
       </li>
     </ul>
     <div>
-      <input v-model="newInput" type="text"/>
+      <!-- keyup.[원하는 키] -->
+      <!-- http://keycode.info/ 에서 키 번호 알 수 있음  ex) enter는 13-->
+      <input @keyup.13="addTodo" v-model="newInput" type="text"/>
       <button @click="addTodo">+</button>
     </div>
     <button @click="clearCompleted">Clear completed</button>
@@ -41,15 +45,18 @@
         status: 'all',
         newInput: '',
         todos: [
-        {
+        { 
+          id: 1,
           content: 'Django 복습',
           completed: true
         },
         {
+          id: 2,
           content: 'JavaScript 복습',
           completed: false
         },
         {
+          id: 3,
           content: 'Vue.js 복습',
           completed: false
         },
@@ -64,6 +71,7 @@
         addTodo(){
           // todos에 새로운 newInput 추가
           this.todos.push({
+            id: Date.now(),
             content: this.newInput,
             completed: false,
           })
@@ -74,6 +82,18 @@
           this.todos = this.todos.filter( todo => !todo.completed)
         },
         todoByStatus(){
+          // status == 'all', 'active', 'completed'
+          if (this.status === 'in-progress'){
+            return this.todos.filter( todo => !todo.completed)
+          }
+          else if (this.status === 'completed'){
+            return this.todos.filter( todo => todo.completed)
+          }
+          return this.todos
+        }
+      },
+      computed: {
+        computedTodoByStatus(){
           // status == 'all', 'active', 'completed'
           if (this.status === 'in-progress'){
             return this.todos.filter( todo => !todo.completed)

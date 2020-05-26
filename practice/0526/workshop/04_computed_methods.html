@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed</title>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="visible = !visible">Reload</button>
+        <button v-on:click="addOne"> + </button>
+        <ul v-if="visible">
+            <!-- methods는 reload 할 때마다 바뀐다 -->
+            <!-- 저장을 하지 않고 불릴 때 마다 쓰인다 -->
+            <li>Methods: {{ getDate()}}</li>
+            <!-- computed는 한번에 caching 해놓고 써서 시간 안바뀐다-->
+            <!-- 값의 변경이 생겨야지만 update가 된다 -->
+            <li>Computed: {{ computedGetDate }}</li>
+
+            <li>Methods: {{ incrementNumber()}}</li>
+            <li>Computed: {{ computedIncrementNumber}}</li>
+        </ul>
+        <p>{{ visible }}</p>
+        <p>{{ people.length }}</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                people: ['john', 'tak','neo'],
+                someNumber: 300,
+                otherNumber: 300, 
+                visible:true,
+            },
+            methods: {
+                addOne(){
+                    this.someNumber +=1
+                },
+                getDate(){
+                    // 다 실행하는데 적어도 10초 걸리는 내용이 있다고 생가ㅏㄱ하면 매우 낭비가 심할 것!
+                    return new Date()
+                },
+                incrementNumber(){
+                    
+                    return this.someNumber
+                }
+            },
+            // Read data는 한번만 띄워놓고 쓰면 되니까 computed가 좋다!
+            computed:{
+                computedGetDate(){
+                    return new Date()
+                },
+                computedIncrementNumber(){
+                    return this.someNumber
+                }
+            },
+            // 비동기 작업에 사용하라!
+            watch: {
+                //someNumber가 변하면 실행해줘!
+                someNumber(){
+                    console.log('형 someNumber 변했어')
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

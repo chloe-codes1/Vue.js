@@ -62,7 +62,14 @@
                 },
                 scrollToTop: function(){
                     scroll(0,0) // 맨 위로 올리기 = > window는 전역객체라서 생략함
-                }
+                },
+                loadUntilViewportIsFull: function(){
+                    const bottomSensor = document.querySelector('#bottomSensor')
+                    const watcher = scrollMonitor.create(bottomSensor)
+                    if (watcher.isFullyInViewport){
+                        this.getPhotos()
+                 }
+                },
             },
 
             // 나에게 제어권이 없는, 때가 되면 실행되는 함수들 : created, mounted
@@ -74,7 +81,12 @@
             // mounted: DOM과 Vue instance가 bind (연동) 되고 난 이후에 실행할 일들
             mounted: function(){
                 this.addScrollWatcher()
-            }
+            },
+
+            //update : data({{}}) 가 바뀌고 나서, 화면에 다시 render 된 이후,
+            updated: function(){
+                this.loadUntilViewportIsFull()
+            },
         })
    
     </script>
