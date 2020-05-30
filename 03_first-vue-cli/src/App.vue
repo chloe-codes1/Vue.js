@@ -1,36 +1,25 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home </router-link>
-      <router-link to="/about">About </router-link>
-      <router-link to="/contact">Contact </router-link>
-      <router-link to="/ping">Ping </router-link>
+      <!-- 이렇게 a tag 쓰면 page reload 됨 -->
+      <!-- 
+      <a href="/">Home</a> | 
+      <a href="/about">About</a> 
+      -->
+      <br>
+
+      <!-- 그래서 router-link 를 써야 함! page reload 되면 우리가 vue를 쓸 이유가 없음! -->
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> | 
+      <router-link to="/contact">Contact</router-link> |
+      <router-link to="/ping">Ping</router-link>
     </div>
-    <hr>
+
     <!-- 여기에 =/= block content -->
-    <router-view />
+    <router-view/>
     <!-- component rendering -->
-    <hr>
   </div>
 </template>
-
-<script>
-// [Component 사용하기]
-// step 1: import 한다
-// import HelloWorld from './components/HelloWorld.vue'
-// import MyComponent from './components/MyComponent.vue'
-// import GreatComponent from './components/GreatComponent.vue'
-
-export default {
-  name: 'App',
-  // step 2: 등록한다
-  components: {
-    // HelloWorld,
-    // MyComponent,
-    // GreatComponent,
-  }
-}
-</script>
 
 <style>
 #app {
@@ -53,6 +42,4 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
-
 </style>
