@@ -8,6 +8,7 @@
 <body>
     <div id="app">
         <button @click="getCatImage">냥줍!</button> 
+        <button @click="getDogImage">멍멍이줍!</button> 
         <br>
         <img :src="catImage" v-bind:alt="altText" v-if="f" id="catImage" height="300px"/>
     </div>
@@ -18,6 +19,7 @@
             el:'#app',
             data: {
                 catImage: '',
+                dogImage: '',
                 altText: '냥이 사진',
                 t: true,
                 f: false,
@@ -34,6 +36,23 @@
                     axiosRequest.get()
                         .then( res => {
                             this.catImage = res.data[0].url
+                            this.f = this.t
+                        })
+                },
+                getDogImage(){
+                    const dogImageURL = 'https://dog.ceo/api/breeds/image/random/'
+                    const axiosRequest = axios.create({
+                        baseURL: dogImageURL,
+                        headers: {
+                            'Access-Control-Allow-Origin': '*',
+                            'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT', 
+                            'Content-Type': 'application/json; charset=UTF-8', 
+                            'Accept': 'application/json',
+                        }
+                    })
+                    axiosRequest.get()
+                        .then( res => {
+                            this.dogImage = res.data.message
                             this.f = this.t
                         })
                 }
