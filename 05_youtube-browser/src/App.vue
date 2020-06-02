@@ -3,7 +3,7 @@
     <!-- Emit 2. 듣고, -->
     <SearchBar @input-change="onInputChange" class="mb-3"/>
     <div class="row">
-      <VideoPlay :videos="videos" class="col-8"/>
+      <VideoDetail :videos="videos" class="col-8"/>
       <VideoList :videos="videos" class="col-4"/>
     </div>
   </div>
@@ -13,7 +13,7 @@
 import axios from 'axios'
 import SearchBar from '@/components/SearchBar'
 import VideoList from '@/components/VideoList'
-import VideoPlay from '@/components/VideoPlay'
+import VideoDetail from '@/components/VideoDetail'
 
 // 절대로 바뀌면 안되는 상수는 all capitalize
 const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY // .env.local 에 있는 "YOUTUBE_API_KEY" 불러오기
@@ -24,7 +24,7 @@ export default {
   components: {
     SearchBar,
     VideoList,
-    VideoPlay,
+    VideoDetail,
 
   },
   data(){
@@ -56,6 +56,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* vue에서만 적용되는 scoped 속성 */
 
 </style>

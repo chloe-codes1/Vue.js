@@ -13,7 +13,7 @@
 <script>
 
 export default {
-  name: 'VideoPlay',
+  name: 'VideoDetail',
   props: {
     videos: Array,
   },
