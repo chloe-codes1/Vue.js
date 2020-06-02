@@ -4,7 +4,7 @@
     <iframe id="player" type="text/html" class="video-iframe" 
             :src="'https://www.youtube.com/embed/'+ video.id.videoId" frameborder="0"></iframe>
 
-    <p>{{video.snippet.title}}</p>
+    <p v-html="video.snippet.title"></p>
     <p class="published-at">{{video.snippet.publishedAt | dateParse('MM.DD.YY', { epoch: 1900 }) }}</p>
   </div>
   </div>
