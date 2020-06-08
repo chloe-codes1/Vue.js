@@ -1,11 +1,16 @@
 <template>
   <div class="container my-3">
     <!-- Emit 2. 듣고, -->
-    <SearchBar @input-change="onInputChange" class="mb-3"/>
-    <div class="row">
-      <VideoDetail :videos="videos" class="col-8"/>
-      <VideoList :videos="videos" class="col-4"/>
+    <div v-if="videos.length === 0" class="main-logo">
+      <img alt="Vue logo" src="./assets/logo.png" class="">
+      <p>VueTube</p>  
     </div>
+    <SearchBar @input-change="onInputChange" class="mb-4"/>
+    <div class="row">
+      <VideoDetail :video="selectedVideo" :videos="videos" />
+      <VideoList @video-select="onVideoSelect" :videos="videos" />
+    </div>
+    <button v-if="videos.length > 0" @click="scrollToTop" class="button-bottom btn">Top</button>
   </div>
 </template>
 
@@ -30,8 +35,8 @@ export default {
   data(){
     return{
       inputValue: '',
-      video: [],
       videos: [],
+      selectedVideo: null, //선택되지 않았다는 것을 명시하기
     }
   },
   methods: {
@@ -48,15 +53,51 @@ export default {
         }
       })
         .then(res => {
+            res.data.items.forEach(item => {
+              const parser = new DOMParser()
+              const doc = parser.parseFromString(item.snippet.title, 'text/html')
+              
+              item.snippet.title = doc.body.innerText
+
+            })
             this.videos = res.data.items
+            this.selectedVideo = this.videos[0]
         })
         .catch(err => console.error(err))
-    }
+    },
+    onVideoSelect(video){
+      this.selectedVideo = video
+    },
+    scrollToTop: function(){
+                scroll(0,0) // 맨 위로 올리기 = > window는 전역객체라서 생략함
+            },
   }
 }
 </script>
 
 <style scoped>
 /* vue에서만 적용되는 scoped 속성 */
+div.main-logo{
+  width: 100%;
+  text-align: center;
+  margin-top: 80px;
+}
 
+div.main-logo > p {
+  font-size: 2.2rem;
+  color: #3fb883;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.button-bottom {
+    position: fixed;
+    right: 4vw;
+    bottom: 2vh;
+    border: 1px solid #3fb883;
+    padding: 4px 8px;
+    color: #3fb883;
+    font-weight: bold;
+}
 </style>

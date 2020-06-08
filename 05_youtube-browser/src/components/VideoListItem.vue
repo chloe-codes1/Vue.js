@@ -3,10 +3,7 @@
     <div class="media thumbnail-image col-5">
       <img :src="thumbnailURL" alt="youtube-thumbnail-image" />
     </div>
-    <!-- <div class="col-7 media-body thumbnail-title">{{ video.snippet.title | truncate(40) }}</div> -->
-    <div class="col-7 media-body thumbnail-title">
-        <span v-html="video.snippet.title"></span>
-    </div>
+    <div class="col-7 media-body thumbnail-title">{{ video.snippet.title | truncate(40) }}</div>
   </div>
 </template>
 

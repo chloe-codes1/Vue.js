@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h5>Up next</h5>
+  <div class="col-md-12 col-lg-4">
+    <h5 v-if="videos.length > 0">Up next</h5>
     <VideoListItem 
           @video-select="onVideoSelect"
           :video="video" 
@@ -19,8 +19,8 @@ export default {
     VideoListItem
   },
   methods: {
-    onVideoSelect(){
-      this.$emit('video-select', this.video)
+    onVideoSelect(video){
+      this.$emit('video-select', video)
     }
   },
   props: {
